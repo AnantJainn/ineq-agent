@@ -8,9 +8,10 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Gemini model configuration
 # Use current, non-deprecated models per official guidance.
-GEMINI_MODEL_PROVER = "gemini-3-flash-preview"   # fast, good reasoning
-GEMINI_MODEL_JUDGE = "gemini-2.5-pro"            # stronger judge model
-
+# GEMINI_MODEL_PROVER = "gemini-3-flash-preview"   # fast, good reasoning
+# GEMINI_MODEL_JUDGE = "gemini-2.5-pro"            # stronger judge model
+GEMINI_MODEL_PROVER = "gemini-1.5-flash"   
+GEMINI_MODEL_JUDGE = "gemini-1.5-flash"
 # Generation parameters
 MAX_TOKENS = 4096
 TEMPERATURE_BASELINE = 0.7
