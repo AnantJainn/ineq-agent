@@ -15,8 +15,8 @@ from judge_agents import run_all_judges, overall_pass
 #    you can also wrap Gemini in a dspy.LM-compatible interface if desired.
 
 # Example (replace with your own LM configuration):
-main_lm = dspy.LM("openai/sonar-reasoning", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
-reflection_lm = dspy.LM("openai/sonar-pro", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
+main_lm = dspy.LM("openai/gpt-5.4", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
+reflection_lm = dspy.LM("openai/gpt-5.4", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
 dspy.configure(lm=main_lm)
 
 
