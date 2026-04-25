@@ -1,4 +1,5 @@
 # optimize_with_gepa.py
+import os
 from typing import Optional
 
 import dspy
@@ -14,9 +15,9 @@ from judge_agents import run_all_judges, overall_pass
 #    you can also wrap Gemini in a dspy.LM-compatible interface if desired.
 
 # Example (replace with your own LM configuration):
-# main_lm = dspy.LM("openrouter/openai/gpt-4.1-nano", api_key=..., api_base=...)
-# reflection_lm = dspy.LM("openrouter/qwen/qwen3-next-80b-a3b-thinking", api_key=..., api_base=...)
-# dspy.configure(lm=main_lm)
+main_lm = dspy.LM("openai/sonar-reasoning", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
+reflection_lm = dspy.LM("openai/sonar-pro", api_key=os.environ.get("PERPLEXITY_API_KEY"), api_base="https://api.perplexity.ai")
+dspy.configure(lm=main_lm)
 
 
 def build_train_val_sets():
