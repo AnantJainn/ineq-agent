@@ -6,8 +6,8 @@ OUTPUT_DIR = PROJECT_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Use OpenRouter's strictly FREE Gemini endpoints to bypass the 402 Error
-GEMINI_MODEL_PROVER = "google/gemini-2.0-flash:free"   
-GEMINI_MODEL_JUDGE = "google/gemini-2.0-flash:free"            
+GEMINI_MODEL_PROVER = "google/gemma-4-31b-it:free"   
+GEMINI_MODEL_JUDGE = "google/gemma-4-31b-it:free"            
 
 # Generation parameters
 MAX_TOKENS = 256
