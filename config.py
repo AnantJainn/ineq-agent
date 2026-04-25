@@ -35,8 +35,8 @@ OUTPUT_DIR = PROJECT_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Using a highly available, lightweight free model
-GEMINI_MODEL_PROVER = "google/gemini-2.0-flash-lite-preview-02-05:free"   
-GEMINI_MODEL_JUDGE = "google/gemini-2.0-flash-lite-preview-02-05:free"            
+GEMINI_MODEL_PROVER = "tencent/hy3-preview:free"   
+GEMINI_MODEL_JUDGE = "tencent/hy3-preview:free"            
 
 # Generation parameters
 MAX_TOKENS = 2048
