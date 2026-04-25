@@ -10,7 +10,7 @@ GEMINI_MODEL_PROVER = "google/gemini-2.5-flash"
 GEMINI_MODEL_JUDGE = "google/gemini-2.5-flash"            
 
 # Generation parameters
-MAX_TOKENS = 4096
+MAX_TOKENS = 512
 TEMPERATURE_BASELINE = 0.7
 TEMPERATURE_STRICT = 0.2
 
