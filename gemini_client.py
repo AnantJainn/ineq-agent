@@ -1,15 +1,16 @@
-# gemini_client.py
 import os
-from typing import List
-
-from google import genai
-from google.genai import types as genai_types
-
+from openai import OpenAI
 from config import GEMINI_MODEL_PROVER, GEMINI_MODEL_JUDGE, MAX_TOKENS
 
-# Initialize client: picks up GEMINI_API_KEY or GOOGLE_API_KEY from environment.
-client = genai.Client()
+# Initialize OpenAI client pointing to OpenRouter's endpoint
+api_key = os.environ.get("OPENROUTER_API_KEY")
+if not api_key:
+    raise ValueError("Please set the OPENROUTER_API_KEY environment variable.")
 
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=api_key,
+)
 
 def call_gemini(
     prompt: str,
@@ -17,30 +18,30 @@ def call_gemini(
     temperature: float = 0.7,
     system_instruction: str | None = None,
 ) -> str:
-    """Single-turn helper that returns plain text from Gemini."""
-    parts: List[genai_types.Part] = [genai_types.Part.from_text(text=prompt)]
-
-    config = genai_types.GenerateContentConfig(
-        temperature=temperature,
-        max_output_tokens=MAX_TOKENS,
-    )
-
-    # System-like instruction goes into the config or prefix if desired.
+    """Single-turn helper that returns plain text using OpenRouter."""
+    messages = []
+    
     if system_instruction is not None:
-        config.system_instruction = system_instruction
+        messages.append({"role": "system", "content": system_instruction})
+        
+    messages.append({"role": "user", "content": prompt})
 
-    response = client.models.generate_content(
+    response = client.chat.completions.create(
         model=model,
-        contents=parts,
-        config=config,
+        messages=messages,
+        temperature=temperature,
+        max_tokens=MAX_TOKENS,
+        # OpenRouter recommends passing these headers
+        extra_headers={
+            "HTTP-Referer": "https://github.com/anantjainn/ineq-agent",
+            "X-Title": "IneqAgent",
+        }
     )
 
-    return getattr(response, "text", "").strip()
-
+    return response.choices[0].message.content.strip()
 
 def call_prover(prompt: str, temperature: float = 0.7) -> str:
     return call_gemini(prompt, model=GEMINI_MODEL_PROVER, temperature=temperature)
-
 
 def call_judge(prompt: str, temperature: float = 0.2) -> str:
     return call_gemini(prompt, model=GEMINI_MODEL_JUDGE, temperature=temperature)
