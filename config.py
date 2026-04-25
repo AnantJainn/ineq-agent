@@ -35,8 +35,8 @@ OUTPUT_DIR = PROJECT_ROOT / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
 # Using a highly available, lightweight free model
-GEMINI_MODEL_PROVER = "google/gemma-4-31b-it"   
-GEMINI_MODEL_JUDGE = "google/gemma-4-31b-it"            
+GEMINI_MODEL_PROVER = "google/gemma-4-31b-it:free"   
+GEMINI_MODEL_JUDGE = "google/gemma-4-31b-it:free"            
 
 # Generation parameters
 MAX_TOKENS = 2048
