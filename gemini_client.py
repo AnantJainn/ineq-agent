@@ -51,7 +51,6 @@
 
 
 
-
 import os
 import time
 from openai import OpenAI, RateLimitError
@@ -76,7 +75,6 @@ def call_gemini(
         
     messages.append({"role": "user", "content": prompt})
 
-    # Robust Retry Loop to handle 429 Errors gracefully
     max_retries = 5
     for attempt in range(max_retries):
         try:
@@ -90,9 +88,18 @@ def call_gemini(
                     "X-Title": "IneqAgent",
                 }
             )
-            # Add a mandatory delay between successful calls to be kind to free APIs
+            
+            # --- THE FIX: Safely extract content to prevent the NoneType error ---
+            content = response.choices[0].message.content
+            
+            if content is None:
+                print(f"[!] API returned empty (None) content. Retrying... (Attempt {attempt+1}/{max_retries})")
+                time.sleep(3)
+                continue  # Skip the rest of the loop and try again
+                
+            # Be kind to free APIs
             time.sleep(2) 
-            return response.choices[0].message.content.strip()
+            return content.strip()
             
         except RateLimitError as e:
             print(f"[!] Rate limited by API. Sleeping 5 seconds... (Attempt {attempt+1}/{max_retries})")
